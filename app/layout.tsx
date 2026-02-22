@@ -43,6 +43,10 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
+  icons: {
+    icon: '/icon.svg',
+    apple: '/icon.svg',
+  },
   metadataBase: new URL("https://kigladsbooks.com"),
   openGraph: {
     title: "KiGlads Bookstore — Premium Book Curation",
