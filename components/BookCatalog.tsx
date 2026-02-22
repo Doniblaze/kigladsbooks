@@ -211,7 +211,7 @@ export default function BookCatalog() {
             <footer className="bg-slate-50 py-12 mt-20 border-t border-slate-100">
                 <div className="max-w-7xl mx-auto px-4 text-center">
                     <p className="text-2xl font-black text-brand tracking-tighter mb-4 opacity-50">KIGLADSBOOKS</p>
-                    <p className="text-slate-400 text-sm">© {new Date().getFullYear()} — Premium Book Curation</p>
+                    <p className="text-slate-400 text-sm">© {new Date().getFullYear()} — Premium Books</p>
                 </div>
             </footer>
         </div>
