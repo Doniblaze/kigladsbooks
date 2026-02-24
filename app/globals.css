@@ -1,73 +1,103 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #1e293b;
-  --brand-green: #6A7843;
-  --brand-green-light: #82915b;
-  --brand-green-dark: #545f35;
-}
+  --background: #FCFCFB;
+  /* Off-white for premium feel */
+  --foreground: #111827;
+  --brand: 76 29% 37%;
+  /* Sophisticated Olive-Green */
+  --brand-light: 76 24% 46%;
+  --brand-dark: 76 35% 28%;
+  --accent: 35 92% 54%;
+  /* Golden accent for premium touches */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;
-    /* User specifically asked for white background */
-    --foreground: #1e293b;
-  }
+  --font-outfit: "Outfit", sans-serif;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-brand: var(--brand-green);
-  --color-brand-light: var(--brand-green-light);
-  --color-brand-dark: var(--brand-green-dark);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --animate-fadeIn: fadeIn 0.5s ease-out forwards;
+  --color-brand: hsl(var(--brand));
+  --color-brand-light: hsl(var(--brand-light));
+  --color-brand-dark: hsl(var(--brand-dark));
+  --color-accent: hsl(var(--accent));
+  --font-outfit: var(--font-outfit);
+
+  --shadow-premium: 0 20px 50px -12px rgba(106, 120, 67, 0.12);
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.03);
+
+  --animate-float: float 6s ease-in-out infinite;
 }
 
-@keyframes fadeIn {
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fadeInScale {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: scale(0.98) translateY(10px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1) translateY(0);
   }
+}
+
+.animate-premium-in {
+  animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-outfit), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+.hero-gradient {
+  background: linear-gradient(135deg, hsl(var(--brand-dark)) 0%, hsl(var(--brand)) 100%);
 }
 
-::-webkit-scrollbar-thumb {
-  background: #e2e8f0;
-  border-radius: 4px;
+.soft-glow {
+  box-shadow: 0 0 40px rgba(106, 120, 67, 0.15);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #cbd5e1;
+/* Utilities */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
-/* Hero Pattern */
-.hero-pattern {
-  background-color: var(--brand-green);
-  background-image: radial-gradient(#ffffff0a 1px, transparent 1px);
-  background-size: 20px 20px;
+/* Utilities */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,8 +12,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+});
+
 export const viewport: Viewport = {
-  themeColor: "#6A7843",
+  themeColor: "#515F36",
   width: "device-width",
   initialScale: 1,
 };
@@ -91,7 +96,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} antialiased`}
       >
         {children}
       </body>
