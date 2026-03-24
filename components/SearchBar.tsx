@@ -18,10 +18,10 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     return (
         <div className="relative w-full group">
             {/* The Input Container */}
-            <div className="relative flex items-center">
+            <div className="relative flex items-center w-full">
                 <div className="absolute left-6 md:left-8 flex items-center pointer-events-none z-10">
                     <svg
-                        className="w-5 h-5 text-neutral-400 group-focus-within:text-brand transition-colors duration-500"
+                        className="w-5 h-5 text-muted transition-colors duration-500 group-focus-within:text-gold"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -39,10 +39,12 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
                     type="text"
                     value={query}
                     onChange={handleChange}
-                    placeholder="Search titles..."
-                    className="w-full glass rounded-2xl md:rounded-3xl py-4 md:py-6 pl-14 md:pl-20 pr-6 text-base md:text-xl text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-0 focus:border-brand/30 border-neutral-200 transition-all duration-500 shadow-premium"
+                    placeholder="Search the collection..."
+                    className="w-full bg-white/5 backdrop-blur-3xl rounded-full border border-white/10 py-5 md:py-6 pl-14 md:pl-20 pr-8 text-base md:text-lg text-cream placeholder:text-muted/60 focus:outline-none focus:ring-0 focus:border-gold focus:bg-white/10 transition-all duration-500 focus:shadow-[0_0_30px_rgba(212,175,55,0.15)] font-light tracking-wide"
                 />
             </div>
+            {/* Subtle glow layer behind the input */}
+            <div className="absolute inset-0 bg-gold/5 rounded-full blur-xl -z-10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-700 pointer-events-none" />
         </div>
     );
 }

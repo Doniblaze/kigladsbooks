@@ -7,7 +7,6 @@ import SearchBar from "@/components/SearchBar";
 import CategoryFilter from "@/components/CategoryFilter";
 import BookCard from "@/components/BookCard";
 import BookCardSkeleton from "@/components/BookCardSkeleton";
-import Hero from "@/components/Hero";
 
 const BOOKS_PER_PAGE = 10;
 
@@ -35,7 +34,6 @@ export default function BookCatalog() {
         loadBooks();
     }, []);
 
-    // Reset to first page when search or category changes
     useEffect(() => {
         setCurrentPage(1);
     }, [searchQuery, selectedCategory]);
@@ -58,14 +56,12 @@ export default function BookCatalog() {
         });
     }, [books, searchQuery, selectedCategory]);
 
-    // Pagination Logic
     const totalPages = Math.ceil(filteredBooks.length / BOOKS_PER_PAGE);
     const paginatedBooks = useMemo(() => {
         const start = (currentPage - 1) * BOOKS_PER_PAGE;
         return filteredBooks.slice(start, start + BOOKS_PER_PAGE);
     }, [filteredBooks, currentPage]);
 
-    // Scroll to products when page changes
     useEffect(() => {
         if (currentPage > 1 || searchQuery || selectedCategory) {
             const element = document.getElementById("search-input");
@@ -76,28 +72,36 @@ export default function BookCatalog() {
     }, [currentPage, searchQuery, selectedCategory]);
 
     return (
-        <div className="min-h-screen bg-white">
-            {/* Hero Banner */}
-            <Hero />
+        <div className="py-20 relative overflow-hidden bg-dark">
+            <div className="absolute top-1/4 -left-[20%] w-[600px] h-[600px] bg-gold/5 rounded-full blur-[150px] pointer-events-none z-0" />
+            <div className="max-w-7xl mx-auto relative z-20 px-6 sm:px-8 lg:px-12">
+                
+                <div className="flex flex-col items-center text-center mb-16 relative z-10">
+                    <div className="inline-flex items-center gap-2 mb-6">
+                        <span className="w-6 h-[1px] bg-gold/40" />
+                        <p className="text-[0.65rem] tracking-[0.25em] font-medium uppercase text-gold">Printed Editions</p>
+                        <span className="w-6 h-[1px] bg-gold/40" />
+                    </div>
+                    <h2 className="font-cormorant text-[clamp(2.5rem,3.5vw,3.5rem)] font-light leading-tight text-cream mb-4">
+                        The <span className="text-gradient italic font-medium">Library.</span>
+                    </h2>
+                    <p className="text-muted text-base leading-relaxed max-w-xl font-light">Explore our curated collection of impactful literature, engineered for deep academic and entrepreneurial growth.</p>
+                </div>
 
-            {/* Main Content Area */}
-            <div className="max-w-7xl mx-auto relative z-20 px-4 sm:px-6 lg:px-8">
-
-                {/* Search Bar - Repositioned for elegance */}
-                <div className="relative -mt-10 md:-mt-14 mb-12 md:mb-20 animate-premium-in">
+                <div className="relative mb-16 animate-slide-up" style={{ animationDelay: '0.1s' }}>
                     <div className="flex justify-center">
-                        <div className="w-full max-w-2xl soft-glow rounded-2xl md:rounded-3xl">
+                        <div className="w-full max-w-3xl glass p-2 rounded-2xl md:rounded-[32px] soft-glow border border-gold/10">
                             <SearchBar onSearch={setSearchQuery} />
                         </div>
                     </div>
                 </div>
 
-                {/* Refining the Category Filter Spacing */}
-                <div className="mb-12 md:mb-20">
+                <div className="mb-16 md:mb-24 relative z-20 animate-slide-up" style={{ animationDelay: '0.2s' }}>
                     {categories.length > 0 && (
                         <div className="flex flex-col items-center gap-6">
-                            <span className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-400">
-                                Browse by Genre
+                            <span className="text-[0.6rem] font-bold uppercase tracking-[0.3em] text-muted relative group cursor-default">
+                                Browse by Category
+                                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-[1px] bg-gold/50 group-hover:w-full transition-all duration-300" />
                             </span>
                             <CategoryFilter
                                 categories={categories}
@@ -108,40 +112,36 @@ export default function BookCatalog() {
                     )}
                 </div>
 
-                {/* Loading State */}
                 {loading && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                        {Array.from({ length: 8 }).map((_, i) => (
+                    <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                        {Array.from({ length: 10 }).map((_, i) => (
                             <BookCardSkeleton key={i} />
                         ))}
                     </div>
                 )}
 
-                {/* Error State */}
                 {error && (
-                    <div className="py-20 text-center">
-                        <div className="inline-flex p-4 rounded-full bg-red-50 mb-4">
-                            <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    <div className="py-24 text-center">
+                        <div className="inline-flex p-5 rounded-3xl bg-red-950/20 border border-red-900/30 mb-6 backdrop-blur-md">
+                            <svg className="w-10 h-10 text-red-500/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
                         </div>
-                        <h3 className="text-xl font-bold text-slate-800">Connection Issue</h3>
-                        <p className="text-slate-500 mt-2">{error}</p>
-                        <button onClick={() => window.location.reload()} className="mt-6 px-6 py-2 bg-brand text-white rounded-full hover:bg-brand-dark transition-all">
-                            Try Again
+                        <h3 className="text-2xl font-cormorant text-cream font-light tracking-wide">Connection Interrupted</h3>
+                        <p className="text-muted mt-3 font-light">{error}</p>
+                        <button onClick={() => window.location.reload()} className="mt-8 px-8 py-3 bg-gold/10 border border-gold/30 text-gold font-medium tracking-[0.15em] uppercase text-xs hover:bg-gold hover:text-dark transition-all rounded-full">
+                            Refresh Connection
                         </button>
                     </div>
                 )}
 
-
-                {/* Books Grid */}
                 {!loading && !error && filteredBooks.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
                         {paginatedBooks.map((book, index) => (
                             <div
                                 key={`${book.title}-${index}`}
-                                className="opacity-0 animate-premium-in"
-                                style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'forwards' }}
+                                className="animate-fade-in"
+                                style={{ animationDelay: `${0.2 + (index * 0.08)}s`, animationFillMode: 'both' }}
                             >
                                 <BookCard book={book} />
                             </div>
@@ -149,42 +149,40 @@ export default function BookCatalog() {
                     </div>
                 )}
 
-                {/* Empty State */}
                 {!loading && !error && filteredBooks.length === 0 && (
-                    <div className="py-12 text-center border-2 border-dashed border-slate-100 rounded-3xl">
-                        <h3 className="text-lg font-bold text-slate-400">No books match your criteria</h3>
-                        <p className="text-slate-400 text-sm mt-1">Try a different search term or category</p>
+                    <div className="py-20 text-center glass rounded-3xl border border-white/5 mx-auto max-w-2xl">
+                        <h3 className="font-cormorant text-2xl text-cream font-light">No volumes found</h3>
+                        <p className="text-muted/70 text-sm mt-3 font-light tracking-wide">Refine your search parameters to discover our collection.</p>
                     </div>
                 )}
 
-                {/* Pagination Controls */}
                 {!loading && !error && totalPages > 1 && (
-                    <div className="mt-12 flex items-center justify-center gap-4">
+                    <div className="mt-24 flex items-center justify-center gap-8">
                         <button
                             id="pagination-prev"
                             disabled={currentPage === 1}
                             onClick={() => setCurrentPage(prev => prev - 1)}
-                            className="flex items-center gap-2 px-5 py-2 rounded-full border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
+                            className="flex items-center gap-3 px-6 py-3 border border-white/10 rounded-full text-muted font-normal text-[0.7rem] tracking-[0.2em] uppercase hover:bg-white/5 hover:text-cream hover:border-white/20 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
                             </svg>
                             Prev
                         </button>
 
-                        <div className="flex items-center gap-2 text-xs">
-                            <span className="font-bold text-slate-400 uppercase tracking-widest">Page</span>
-                            <span className="bg-brand/10 text-brand px-2.5 py-1 rounded-lg font-black">
+                        <div className="flex items-center gap-3 text-[0.75rem] uppercase tracking-[0.25em] text-muted/70 bg-white/5 px-6 py-2 rounded-full border border-white/5">
+                            <span className="text-gold font-medium">
                                 {currentPage}
                             </span>
-                            <span className="font-bold text-slate-400 uppercase tracking-widest">of {totalPages}</span>
+                            <span className="opacity-50">/</span>
+                            <span>{totalPages}</span>
                         </div>
 
                         <button
                             id="pagination-next"
                             disabled={currentPage === totalPages}
                             onClick={() => setCurrentPage(prev => prev + 1)}
-                            className="group flex items-center gap-2 px-6 py-2 rounded-full bg-brand text-white font-bold text-sm hover:bg-brand-dark shadow-md shadow-brand/20 disabled:opacity-30 disabled:shadow-none transition-all"
+                            className="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-gold to-gold-light text-dark shadow-gold-glow rounded-full font-semibold text-[0.7rem] tracking-[0.2em] uppercase hover:scale-105 disabled:opacity-30 disabled:pointer-events-none transition-all duration-300"
                         >
                             Next
                             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -194,14 +192,6 @@ export default function BookCatalog() {
                     </div>
                 )}
             </div>
-
-            {/* Footer */}
-            <footer className="bg-slate-50 py-10 mt-12 border-t border-slate-100">
-                <div className="max-w-7xl mx-auto px-4 text-center">
-                    <p className="text-xl font-black text-brand tracking-tighter mb-2 opacity-50">KIGLADSBOOKS</p>
-                    <p className="text-slate-400 text-xs">© {new Date().getFullYear()} — Premium Books</p>
-                </div>
-            </footer>
         </div>
     );
 }

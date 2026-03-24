@@ -12,9 +12,10 @@ export async function fetchBooks(): Promise<Book[]> {
     }
 
     const csvText = await response.text();
+    const cleanCsvText = csvText.replace(/^\uFEFF/, '').trim();
 
     return new Promise((resolve, reject) => {
-        Papa.parse<Record<string, string>>(csvText, {
+        Papa.parse<Record<string, string>>(cleanCsvText, {
             header: true,
             skipEmptyLines: true,
             complete(results) {
